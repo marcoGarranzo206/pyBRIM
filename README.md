@@ -7,7 +7,7 @@ Finding communities is a very common and important step in most network analysis
 
 # Example usages:
 
-## BRIM. Unknown number of communities, unsigned
+#### BRIM. Unknown number of communities, unsigned
 ```python
 import networkx as nx
 import pyBRIM
@@ -18,7 +18,7 @@ R_t,S, Q_max = bs.BRIM_bisec()
 nodes_to_communities = bs.translate_communities(R_t,S)
 ```
 
-## BRIM. Known number of communities, unsigned
+#### BRIM. Known number of communities, unsigned
 ```python
 import networkx as nx
 import pyBRIM
@@ -28,13 +28,15 @@ bs = pyBRIM.BRIM_solver(g)
 R_t,S, Q_max = bs.fit_transform(4)
 nodes_to_communities = bs.translate_communities(R_t,S)
 ```
-## BRIM. Unknown number of communities, signed
+#### BRIM. Unknown number of communities, signed
 
-## Meta clustering: HAC
+#### Meta clustering: HAC
 
-## Meta clustering: Majprity voting
+#### Meta clustering: Majprity voting
 
-## Meta clustering: best meta clusters
+#### Meta clustering: best meta clusters
 
 # Description
+
+# References
 
