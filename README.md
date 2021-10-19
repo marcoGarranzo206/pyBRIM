@@ -10,7 +10,7 @@ Finding communities is a very common and important step in most network analysis
 There are two modules, BRIM and meta.
 
 ## BRIM
-BRIM module revolves around the BRIM_solver object.Pass it the graph you want to use, the null model (for signed or unsigned networks) and the resolution value (to determine xommunity sizes, more in dexcription).
+BRIM module revolves around the BRIM_solver object.Pass it the graph you want to use, the null model (for signed or unsigned networks) and the resolution value (to determine community sizes, more in description).
 
 After creation you can run the fit_transform method to find communities when the number of communities is found. If you dont know, you can use the BRIM_bisec method, which you can pass it a maximum number of communities.
 
@@ -18,6 +18,7 @@ After creation you can run the fit_transform method to find communities when the
 meta module revolves around the metaCluster object. You pass it an array of cluster runs. Each row corresponds to a cluster run, each column a node. (i,j) element s the community of node j in cluster run i. A co-occurrence matrix is built.
 
 After creation you can do meta clustering based on majority voting or HAC. Run majorityVote method with a threshold t for joining communities (see description). Run HAC nethod for HAC meta clustering with a distance threshold t and distance type distance arguments, as permited by scipys scipy.cluster.hierarchy.linkage
+## Examples
 
 #### BRIM. unknown number of communities, unsigned
 ```python
