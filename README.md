@@ -117,6 +117,7 @@ clusters = mc.HAC(0.1, "median")#array. ith position is community of node with i
 ```
 
 #### Meta clustering: majority voting
+```python
 import requests
 import networkx as nx
 import pyBRIM
