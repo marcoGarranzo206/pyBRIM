@@ -158,5 +158,8 @@ mc = pyBRIM.metaCluster(cluster_runs)
 clusters = mc.majorityVote(.9)#array. ith position is community of node with index i```
 ```
 # Description
+
+<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
+
 # References
 
