@@ -31,6 +31,7 @@ After creation you can do meta clustering based on majority voting or HAC. Run m
 A problem now arises: which is the best meta algorithm. That is up to you to decide. One choice is to use the meta algorithm which yields the best average normalized mutual information score w.r.t to the original cluster runs, since it is on average the most "consistent" with all the different runs. If that is your metric, you may try to optimize directly with general discrete solvers such as genetic algorithms or simulated annealing, but in my experience the meta algorithms work quite well at a fraction of the time.
 
 ## Examples
+We will be using two networks: davis southern woman graph available at networkx and the US Senate - bills dataset available at the github repo DSE-MSU/signed-bipartite-networks
 
 #### BRIM. unknown number of communities, unsigned
 ```python
@@ -53,7 +54,7 @@ bs = pyBRIM.BRIM_solver(g)
 R_t,S, Q_max = bs.fit_transform(4)
 nodes_to_communities = bs.translate_communities(R_t,S)
 ```
-#### BRIM. unknown number of communities, signed
+#### BRIM. unknown number of communities, signed, setting resolution value to 2
 ```python
 import requests
 import networkx as nx
@@ -73,7 +74,7 @@ for i, (u,v,w) in enumerate(map(lambda x: x.split(), req.text.split("\n"))):
     v = "v_" + v
     g.add_edge(u,v, weight = w)
     
-bs = pyBRIM.BRIM_solver(g, "neg")
+bs = pyBRIM.BRIM_solver(g, "neg", 2)
 R_t,S, Q_max = bs.BRIM_bisec()
 
 nodes_to_communities = bs.translate_communities(R_t,S).items()
