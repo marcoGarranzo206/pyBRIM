@@ -3,7 +3,9 @@ Algorithms for community detection on bipartite graphs based on BRIM algorithm
 
 # Overview
 
-Finding communities is a very common and important step in most network analysis. Many community finding algorithms are based on Newmans modularity optimization, initially design for "normal" networks (unweighted, unsigned). Here I implement algorithms for community finding in python for specifically bipartite networks, signed or unsigned, based on the BRIM algorithm. There is additionally a meta clustering module for combining results from different algorithm runs.
+Finding communities is a very common and important step in most network analysis. Network communities can help find groups of similar nodes, such as users in a social network, groups of products and buyers from sales data,  proteins that belong to similar pathways in a metabolic network, or groups of drugs in a drug interaction network.
+
+Many community finding algorithms are based on Newmans modularity optimization, initially design for "normal" networks (unweighted, unsigned). Here I implement algorithms for community finding in python for specifically bipartite networks, signed or unsigned, based on the BRIM algorithm. There is additionally a meta clustering module for combining results from different algorithm runs.
 
 # Dependencies
 
@@ -159,7 +161,10 @@ clusters = mc.majorityVote(.9)#array. ith position is community of node with ind
 ```
 # Description
 
-<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
+Network communities can be loosely defined as groups of nodes that interact a lot with each other and sparsely with other nodes. A rigorous mathematical definition it is not, and Newmann defined the quantity of modularity to judge community assingments of a network based on that principle:
+
+
+<img src="https://render.githubusercontent.com/render/math?math=Q = {1/2m}[A_{ij} - {{k_ik_j}/2m}]">
 
 # References
 
