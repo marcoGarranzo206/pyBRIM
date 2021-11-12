@@ -21,7 +21,7 @@ There are two modules, BRIM and meta.
 ## BRIM
 BRIM module revolves around the BRIM_solver object.Pass it the graph you want to use, the null model (for signed or unsigned networks) and the resolution value (to determine community sizes, more in description).
 
-After creation you can run the fit_transform method to find communities when the number of communities is found. If you dont know, you can use the BRIM_bisec method, which you can pass it a maximum number of communities. The algorithm relies on random initializations, meaning that different runs may (most probably) contain different communities. To solve this issue there is the meta module.
+After creation you can run the fit_transform method(c) to find c communities. If you dont know the number of communities, you can use the BRIM_bisec method, which you can pass it a maximum number of communities. The algorithm relies on random initializations, meaning that different runs may (most probably) contain different communities. To solve this issue there is the meta module.
 
 Both methods return the R matrix transposed (R_t), the S matrix (S) and Qmax score (Q_max) as described in the paper (brief description in descritption). To get a dictionary of node to community assingments use the translate_communities method by passing it R_t and S matrices
 
