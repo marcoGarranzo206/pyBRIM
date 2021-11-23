@@ -164,7 +164,7 @@ clusters = mc.majorityVote(.9)#array. ith position is community of node with ind
 Network communities can be loosely defined as groups of nodes that interact a lot with each other and sparsely with other nodes. A rigorous mathematical definition it is not, and Newmann defined the quantity of modularity to judge community assingments of a network based on that principle:
 
 
-<img src="https://render.githubusercontent.com/render/math?math=Q = \frac{1}{2m}[A_{ij} - \frac{k_ik_j}{2m}]">
+<img src="https://render.githubusercontent.com/render/math?math=Q = \frac{1}{2m}\sum_{i,j}[A_{ij} - \frac{k_ik_j}{2m}]">
 
 # References
 
