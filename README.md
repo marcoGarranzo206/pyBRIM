@@ -19,16 +19,16 @@ tdqm for progress bar in meta module
 There are two modules, BRIM and meta.
 
 ## BRIM
-BRIM module revolves around the BRIM_solver object.Pass it the graph you want to use, the null model (for signed or unsigned networks) and the resolution value (to determine community sizes, more in description).
+BRIM module revolves around the BRIM_solver object.Pass it the graph you want to use, the null model (ie signed or unsigned networks) and the resolution value (parameter that determines community sizes, more in description).
 
-After creation you can run the fit_transform method(c) to find c communities. If you dont know the number of communities, you can use the BRIM_bisec method, which you can pass it a maximum number of communities. The algorithm relies on random initializations, meaning that different runs may (most probably) contain different communities. To solve this issue there is the meta module.
+After creation you can run the fit_transform method(c) to find c communities. If you dont know the number of communities, you can use the BRIM_bisec method, which you can also pass it a maximum number of communities to search for. The algorithm relies on random initializations, meaning that different runs may (most probably) contain different communities. To solve this issue there is the meta module.
 
-Both methods return the R matrix transposed (R_t), the S matrix (S) and Qmax score (Q_max) as described in the paper (brief description in descritption). To get a dictionary of node to community assingments use the translate_communities method by passing it R_t and S matrices
+Both methods return the R matrix transposed (R_t), the S matrix (S) and Qmax score (Q_max) as described in the BRIM paper (brief description in descritption). To get a dictionary of node to community assingments use the translate_communities method by passing it R_t and S matrices
 
 ## meta
 meta module revolves around the metaCluster object. You pass it an array of cluster runs. Each row corresponds to a cluster run, each column a node. (i,j) element s the community of node j in cluster run i. A co-occurrence matrix is built.
 
-After creation you can do meta clustering based on majority voting or HAC. Run majorityVote method with a threshold t for joining communities (see description). Run HAC nethod for HAC meta clustering with a distance threshold t and distance type distance arguments, as permited by scipys scipy.cluster.hierarchy.linkage
+After creation you can do meta clustering based on majority voting or HAC. Run majorityVote method with a threshold t for joining communities. Run HAC nethod for HAC meta clustering with a distance threshold t and distance type distance arguments, as permited by scipys scipy.cluster.hierarchy.linkage
 
 A problem now arises: which is the best meta algorithm. That is up to you to decide. One choice is to use the meta algorithm which yields the best average normalized mutual information score w.r.t to the original cluster runs, since it is on average the most "consistent" with all the different runs. If that is your metric, you may try to optimize directly with general discrete solvers such as genetic algorithms or simulated annealing, but in my experience the meta algorithms work quite well at a fraction of the time.
 
