@@ -159,7 +159,7 @@ for i in range(n_cluster_runs):
 mc = pyBRIM.metaCluster(cluster_runs)
 clusters = mc.majorityVote(.9)#array. ith position is community of node with index i```
 ```
-# Description
+# Modularity description
 
 Network communities can be loosely defined as groups of nodes that interact a lot with each other and sparsely with other nodes. A rigorous mathematical definition it is not, and Newmann defined the quantity of modularity to judge community assingments of a network based on that principle:
 
