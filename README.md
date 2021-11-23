@@ -164,7 +164,18 @@ clusters = mc.majorityVote(.9)#array. ith position is community of node with ind
 Network communities can be loosely defined as groups of nodes that interact a lot with each other and sparsely with other nodes. A rigorous mathematical definition it is not, and Newmann defined the quantity of modularity to judge community assingments of a network based on that principle:
 
 
-<img src="https://render.githubusercontent.com/render/math?math=Q = \frac{1}{2m}\sum_{i,j}[A_{ij} - \frac{k_ik_j}{2m}]">
+<img src="https://render.githubusercontent.com/render/math?math=Q = \frac{1}{2m}\sum_{i,j}[A_{ij} - \frac{k_ik_j}{2m}]\delta(c_i,c_j)">
+
+Essentially it goes over all pairs of nodes i,j in the graph, and if they are in the same community, sums up the adjacency matrix value (1 if connected, 0 otherwise) and subtracts it the expected value it should have. Here we use the configuration null model, where the expected value of Aij is proprotional to the products of the degrees of i and j.
+
+### Bipartite networks
+The problem when using this modularity for bipartite networks is that by defintion, nodes within a set do not interact. If placed on the same community, Aij will be 0, but the expected value will be some positive number under the configuration null model, bringing the modularity down. 
+
+The solution in BRIM is simple, have the expected adjacency value of two nodes in the same set be 0. With this in mind and with some clever linear algebra, an iterative algorithm was formed to find communities in bitartite networks.
+
+### Signed networks
+
+### Resolution value
 
 # References
 
