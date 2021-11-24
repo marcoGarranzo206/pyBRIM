@@ -174,6 +174,14 @@ The problem when using this modularity for bipartite networks is that by definti
 The solution in BRIM is simple, have the expected adjacency value of two nodes in the same set be 0. With this in mind and with some clever linear algebra, an iterative algorithm was formed to find communities in bitartite networks.
 
 ### Signed networks
+Signed networks can have positive (Aij = 1) or negative (Aij = -1) interactions between members. These can include:
+
+- Social networks: people can like or dislike each other
+- drug-protein interaction network: drugs can inhibit or increase protein activity
+
+Newmans modularity breaks down in these cases. The underlying reason is that it has a probabilistic formulation which cannot function with negative values in the expectation of Aij or in Aij. Gomez et al solved this problem by splitting modularity in two: one for the positive edges and one for the negative edges, with the ultimate goal to maximize:
+
+<img src="https://render.githubusercontent.com/render/math?math=Q^+ = \frac{1}{2w^+}\sum_{i,j}[w_{ij}^+ - \frac{w_i^+w_j^+}{2w^+}]\delta(c_i,c_j)">
 
 ### Resolution value
 
