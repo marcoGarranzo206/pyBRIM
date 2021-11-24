@@ -42,8 +42,7 @@ import pyBRIM
 
 g = nx.davis_southern_women_graph()
 bs = pyBRIM.BRIM_solver(g)
-R_t,S, Q_max = bs.BRIM_bisec()
-nodes_to_communities = bs.translate_communities(R_t,S)
+nodes_to_communities, Q_max = bs.BRIM_bisec()
 ```
 
 #### BRIM. known number of communities, unsigned
@@ -53,8 +52,7 @@ import pyBRIM
 
 g = nx.davis_southern_women_graph()
 bs = pyBRIM.BRIM_solver(g)
-R_t,S, Q_max = bs.fit_transform(4)
-nodes_to_communities = bs.translate_communities(R_t,S)
+nodes_to_communities, Q_max = bs.fit_transform(4)
 ```
 #### BRIM. unknown number of communities, signed, setting resolution value to 2
 ```python
@@ -77,9 +75,7 @@ for i, (u,v,w) in enumerate(map(lambda x: x.split(), req.text.split("\n"))):
     g.add_edge(u,v, weight = w)
     
 bs = pyBRIM.BRIM_solver(g, "neg", 2)
-R_t,S, Q_max = bs.BRIM_bisec()
-
-nodes_to_communities = bs.translate_communities(R_t,S).items()
+nodes_to_communities, Q_max = bs.BRIM_bisec()
 ```
 
 #### Meta clustering: HAC
@@ -112,8 +108,8 @@ cluster_runs = np.zeros((n_cluster_runs, len(g) ))
 for i in range(n_cluster_runs):
     
     
-    R_t,S, Q_max = bs.BRIM_bisec()
-    for node,cluster in bs.translate_communities(R_t,S).items():
+    nodes_to_communities, Q_max = bs.BRIM_bisec()
+    for node,cluster in nodes_to_communities.items():
         
         cluster_runs[i, nodes_to_idxs[node]] = cluster
         
@@ -151,8 +147,8 @@ cluster_runs = np.zeros((n_cluster_runs, len(g) ))
 for i in range(n_cluster_runs):
     
     
-    R_t,S, Q_max = bs.BRIM_bisec()
-    for node,cluster in bs.translate_communities(R_t,S).items():
+    nodes_to_communities, Q_max = bs.BRIM_bisec()
+    for node,cluster in nodes_to_communities.items():
         
         cluster_runs[i, nodes_to_idxs[node]] = cluster
         
