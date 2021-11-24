@@ -72,10 +72,11 @@ class BRIM_solver:
         else:
 
             S[range(self.B.shape[1]), assingments] = 1
+        
+        R_T, S, Q = BRIM_loop(self.B,c,S,self.m)
+        return self._translate_communities(R_t,S), Q
 
-        return BRIM_loop(self.B,c,S,self.m)
-
-    def translate_communities(self,R_t,S):
+    def _translate_communities(self,R_t,S):
 
         """
         Recieve communty assingments for R_t and S matrix and output
@@ -159,7 +160,7 @@ class BRIM_solver:
 
             if high < low or c_prev == c:
 
-                return R_T_max,S_max, Q_max
+                return self._translate_communities(R_t,S), Q
 
             assingments_s[np.random.choice(range(self.B.shape[1]), half, replace = False )] = np.random.randint(low = 0, high = c, size = half)
             #cluster number in previus run might be higher than total number of clusters now
