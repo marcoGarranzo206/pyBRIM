@@ -23,7 +23,7 @@ BRIM module revolves around the BRIM_solver object.Pass it the graph you want to
 
 After creation you can run the fit_transform method(c) to find c communities. If you dont know the number of communities, you can use the BRIM_bisec method, which you can also pass it a maximum number of communities to search for. The algorithm relies on random initializations, meaning that different runs may (most probably) contain different communities. To solve this issue there is the meta module.
 
-Both methods return the R matrix transposed (R_t), the S matrix (S) and Qmax score (Q_max) as described in the BRIM paper (brief description in descritption). To get a dictionary of node to community assingments use the translate_communities method by passing it R_t and S matrices
+Both methods return a dictionary of node to community assingments and the Q value.
 
 ## meta
 meta module revolves around the metaCluster object. You pass it an array of cluster runs. Each row corresponds to a cluster run, each column a node. (i,j) element s the community of node j in cluster run i. A co-occurrence matrix is built.
@@ -161,7 +161,7 @@ clusters = mc.majorityVote(.9)#array. ith position is community of node with ind
 ```
 # Modularity description
 
-Network communities can be loosely defined as groups of nodes that interact a lot with each other and sparsely with other nodes. A rigorous mathematical definition it is not, and Newmann defined the quantity of modularity to judge community assingments of a network based on that principle:
+Network communities can be loosely defined as groups of nodes that interact a lot with each other and sparsely with other nodes. A rigorous mathematical definition it is not, and Newmann defined the quantity of modularity to judge community assingments of a network based on that principle [1]:
 
 
 <img src="https://render.githubusercontent.com/render/math?math=Q = \frac{1}{2m}\sum_{i,j}[A_{ij} - \frac{k_ik_j}{2m}]\delta(c_i,c_j)">
@@ -171,7 +171,7 @@ Essentially it goes over all pairs of nodes i,j in the graph, and if they are in
 ### Bipartite networks
 The problem when using this modularity for bipartite networks is that by defintion, nodes within a set do not interact. If placed on the same community, Aij will be 0, but the expected value will be some positive number under the configuration null model, bringing the modularity down. 
 
-The solution in BRIM is simple, have the expected adjacency value of two nodes in the same set be 0. With this in mind and with some clever linear algebra, an iterative algorithm was formed to find communities in bitartite networks.
+The solution proposed by Barber is simple, have the expected adjacency value of two nodes in the same set be 0. With this in mind and with some clever linear algebra, an iterative algorithm was formed to find communities in bitartite networks [2].
 
 ### Signed networks
 Signed networks can have positive (Aij = 1) or negative (Aij = -1) interactions between members. These can include:
@@ -179,11 +179,26 @@ Signed networks can have positive (Aij = 1) or negative (Aij = -1) interactions 
 - Social networks: people can like or dislike each other
 - drug-protein interaction network: drugs can inhibit or increase protein activity
 
-Newmans modularity breaks down in these cases. The underlying reason is that it has a probabilistic formulation which cannot function with negative values in the expectation of Aij or in Aij. Gomez et al solved this problem by splitting modularity in two: one for the positive edges and one for the negative edges, with the ultimate goal to maximize:
+Newmans modularity breaks down in these cases. The underlying reason is that it has a probabilistic formulation which cannot function with negative values in the expectation of Aij or in Aij. Gomez et al solved this problem by splitting modularity in two: one for the positive edges and one for the negative edges, with the ultimate goal to maximize Q as [3]:
 
 <img src="https://render.githubusercontent.com/render/math?math=Q^+ = \frac{1}{2w^+}\sum_{i,j}[w_{ij}^+ - \frac{w_i^+w_j^+}{2w^+}]\delta(c_i,c_j)">
+<img src="https://render.githubusercontent.com/render/math?math=Q^- = \frac{1}{2w^-}\sum_{i,j}[w_{ij}^- - \frac{w_i^-w_j^-}{2w^-}]\delta(c_i,c_j)">
+<img src="https://render.githubusercontent.com/render/math?math=Q = \frac{2w^+}{2w^+ + 2w^-}Q^+ - \frac{2w^-}{2w^+ + 2w^-}Q^-">
+
+With the w+ indicating values for the positive partition of the graph and viceversa. We can optimize Q using the same BRIM algorithm as before.
 
 ### Resolution value
+Modularity suffers from a resolution limit. As networks get bigger and bigger, the limit to the community sizes it can detect increases. In big sparse networks, any edge will have low probability of ocurring, so modularity will favor much more putting two nodes together in the same community as long as they are connected [4].
+
+This can be mitigated by putting a resolution parameter alpha > 1 to penalize two nodes in the same comunity:
+<img src="https://render.githubusercontent.com/render/math?math=Q^+ = \frac{1}{2w^+}\sum_{i,j}[w_{ij}^+ - \alpha\frac{w_i^+w_j^+}{2w^+}]\delta(c_i,c_j)">
+
+For negative networks, once a alpha is chosen, here we put 1/alpha as the resolution for Q-. We can optimize Q using the same BRIM algorithm as before.
+
 
 # References
 
+[1] Newman M. E. (2006). Modularity and community structure in networks. Proceedings of the National Academy of Sciences of the United States of America, 103(23), 8577–8582. https://doi.org/10.1073/pnas.0601602103
+[2] Barber MJ. Modularity and community detection in bipartite networks. Phys Rev E Stat Nonlin Soft Matter Phys. 2007 Dec;76(6 Pt 2):066102. doi: 10.1103/PhysRevE.76.066102. Epub 2007 Dec 7. PMID: 18233893.
+[3] Gomez, Sergio & Jensen, Pablo & Arenas, Alex. (2009). Analysis of community structure in networks of correlated data. Physical review. E, Statistical, nonlinear, and soft matter physics. 80. 016114. 10.1103/PhysRevE.80.016114. 
+[4] Fortunato, S., & Barthélemy, M. (2007). Resolution limit in community detection. Proceedings of the National Academy of Sciences of the United States of America, 104(1), 36–41. https://doi.org/10.1073/pnas.0605965104
