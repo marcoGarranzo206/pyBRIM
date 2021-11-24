@@ -199,6 +199,9 @@ For negative networks, once a alpha is chosen, here we put 1/alpha as the resolu
 # References
 
 [1] Newman M. E. (2006). Modularity and community structure in networks. Proceedings of the National Academy of Sciences of the United States of America, 103(23), 8577–8582. https://doi.org/10.1073/pnas.0601602103
+
 [2] Barber MJ. Modularity and community detection in bipartite networks. Phys Rev E Stat Nonlin Soft Matter Phys. 2007 Dec;76(6 Pt 2):066102. doi: 10.1103/PhysRevE.76.066102. Epub 2007 Dec 7. PMID: 18233893.
+
 [3] Gomez, Sergio & Jensen, Pablo & Arenas, Alex. (2009). Analysis of community structure in networks of correlated data. Physical review. E, Statistical, nonlinear, and soft matter physics. 80. 016114. 10.1103/PhysRevE.80.016114. 
+
 [4] Fortunato, S., & Barthélemy, M. (2007). Resolution limit in community detection. Proceedings of the National Academy of Sciences of the United States of America, 104(1), 36–41. https://doi.org/10.1073/pnas.0605965104
