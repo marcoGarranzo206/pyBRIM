@@ -61,7 +61,7 @@ class BRIM_solver:
             self._BNullBipartiteConfigNeg()
 
 
-    def fit_transform(self, c, assingments = None):
+    def _fit_transform(self, c, assingments = None):
 
 
         S = np.zeros((self.B.shape[1], c))
@@ -73,8 +73,13 @@ class BRIM_solver:
 
             S[range(self.B.shape[1]), assingments] = 1
         
-        R_T, S, Q = BRIM_loop(self.B,c,S,self.m)
-        return self._translate_communities(R_t,S), Q
+        return BRIM_loop(self.B,c,S,self.m)
+        
+    
+    def fit_transform(self, c, assingments = None):
+        
+        R_T, S, Q = self._fit_transform(c, assingments)
+        return self._translate_communities(R_T,S), Q
 
     def _translate_communities(self,R_t,S):
 
@@ -132,7 +137,7 @@ class BRIM_solver:
 
 
             assingments_s[np.random.choice(range(self.B.shape[1]), half, replace = False )] = np.random.randint(low = 0, high = c, size = half)
-            R_T, S, Q_new = self.fit_transform(c,assingments = assingments_s)
+            R_T, S, Q_new = self._fit_transform(c,assingments = assingments_s)
             assingments_s = np.where(S != 0 )[1]
             if Q_new > Q_old:
 
@@ -160,7 +165,7 @@ class BRIM_solver:
 
             if high < low or c_prev == c:
 
-                return self._translate_communities(R_t,S), Q
+                return self._translate_communities(R_T,S), Q
 
             assingments_s[np.random.choice(range(self.B.shape[1]), half, replace = False )] = np.random.randint(low = 0, high = c, size = half)
             #cluster number in previus run might be higher than total number of clusters now
@@ -170,7 +175,7 @@ class BRIM_solver:
             assingments_s = np.array([ clusters_to_idxs[n] for n in assingments_s])
            
             #print(c, max(assingments_s))
-            R_T, S, Q_new = self.fit_transform(c + 1,assingments = assingments_s)
+            R_T, S, Q_new = self._fit_transform(c + 1,assingments = assingments_s)
             assingments_s = np.where(S != 0 )[1]
 
 
