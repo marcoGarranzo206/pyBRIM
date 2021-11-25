@@ -78,8 +78,8 @@ class BRIM_solver:
     
     def fit_transform(self, c, assingments = None):
         
-        R_T, S, Q = self._fit_transform(c, assingments)
-        return self._translate_communities(R_T,S), Q
+        R_T, S, Q_max = self._fit_transform(c, assingments)
+        return self._translate_communities(R_T,S), Q_max
 
     def _translate_communities(self,R_t,S):
 
@@ -165,7 +165,7 @@ class BRIM_solver:
 
             if high < low or c_prev == c:
 
-                return self._translate_communities(R_T,S), Q
+                return self._translate_communities(R_T,S), Q_max
 
             assingments_s[np.random.choice(range(self.B.shape[1]), half, replace = False )] = np.random.randint(low = 0, high = c, size = half)
             #cluster number in previus run might be higher than total number of clusters now
